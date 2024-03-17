@@ -64,6 +64,13 @@ Use $ count_color_in_image "path_to_image"
     }
 }
 
+/*
+I refered to
+[hsl-rs](https://github.com/killercup/hsl-rs) and
+[colorsys.rs](https://github.com/emgyrz/colorsys.rs)
+These are MIT Licence.
+Thanks to these authors and contributers.
+*/
 fn rgb_to_hsl(rgb: &Rgb<u8>) -> Hsl {
     let mut h: f64;
     let s: f64; // saturation
@@ -113,6 +120,13 @@ fn rgb_to_hsl(rgb: &Rgb<u8>) -> Hsl {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /*
+    I refered to
+    [colorsys.rs](https://github.com/emgyrz/colorsys.rs)
+    This is MIT Licence.
+    Thanks to these authors and contributers.
+    */
     #[test]
     fn test_rgb_to_hsl() {
         let asserts = [
@@ -126,9 +140,9 @@ mod tests {
         asserts.iter().for_each(|t| {
             let rgb = Rgb([t.0 .0, t.0 .1, t.0 .2]);
             let hsl = rgb_to_hsl(&rgb);
-            assert_eq!(hsl.h, t.1 .0);
-            assert_eq!(hsl.s, t.1 .1);
-            assert_eq!(hsl.l, t.1 .2);
+            assert_eq!(hsl.h.round(), t.1 .0);
+            assert_eq!((hsl.s * 100.0).round(), t.1 .1);
+            assert_eq!((hsl.l * 100.0).round(), t.1 .2);
         });
     }
 }
